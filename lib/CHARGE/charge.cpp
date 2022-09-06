@@ -76,8 +76,6 @@ void main_charger(void)
         }
 
         // status charging, low_bat
-        
-
         if (vol_raw >= 2.5)
         {
             if (battery_percent >= 95)
@@ -101,6 +99,7 @@ void main_charger(void)
     }
 }
 
+// Read RS485 from PIN
 void read_charger(void)
 {
     char inChar = (char)Serial2.read();
@@ -108,7 +107,6 @@ void read_charger(void)
     {
         data_buffer[data_index] = inChar;
         data_index++;
-       
     }
 
     if (data_index >= 10 && read_index == 2)
@@ -116,7 +114,7 @@ void read_charger(void)
         vol_raw = data_buffer[2] << 8 | data_buffer[3];
         cur_raw = data_buffer[4] << 8 | data_buffer[5];
         remaining_capacity = data_buffer[6] << 8 | data_buffer[7];
-        Serial.print(vol_raw);
+        // Serial.print(vol_raw);
         data_index = 0;
         read_index = 0;
     }
