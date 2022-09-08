@@ -21,7 +21,7 @@
 #define NORMAL_BATTERY 4
 
 // data
-#define MAX_VOLTAGE 3.7 * 8
+#define MAX_VOLTAGE 3.65 * 8
 #define MIN_VOLTAGE 2 * 8
 
 void main_charger(void);
