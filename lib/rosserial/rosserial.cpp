@@ -32,9 +32,9 @@ void setup_rosserial(void)
     nh.getHardware()->setBaud(57600);
     nh.subscribe(cmd_sub);
 
-    while (!nh.connected())
+    while (ros::ok())
     {
-        nh.spinOnce();
+        ros::spinOnce();
     }
     threads.delay(1);
 }
