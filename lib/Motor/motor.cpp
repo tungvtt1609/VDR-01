@@ -40,8 +40,8 @@ void main_motor(void)
         velocity_R = Read_Velocity_rpm(Right_Wheel_ID);
         velocity_L = Read_Velocity_rpm(Left_Wheel_ID);
         // get_fb_robot_velocity
-        // bien v_x = calculate_vx_w(LINEAR_X, velocity_L, velocity_R);
-        // bien v_x = calculate_vx_w(LINEAR_X, velocity_L, velocity_R);
+        bien v_x = calculate_vx_w(LINEAR_X, velocity_L, velocity_R);
+        bien v_x = calculate_vx_w(LINEAR_X, velocity_L, velocity_R);
 
         threads.yield();
     }

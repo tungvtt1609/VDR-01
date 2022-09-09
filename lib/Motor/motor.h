@@ -24,12 +24,12 @@
 #define SDO_W2 0x2B // ask write 2 byte
 #define SDO_W4 0x23 // ask write 4 byte
 #define SDO_RD 0x40 // ask read data
-//#define PP_Mode  1
+#define PP_Mode  1
 #define PV_Mode 3
-//#define PT_Mode  4
+#define PT_Mode  4
 
 #define DISTANCE_WHEEL 0.4 // met
-#define DIAMETER_WHEEL 0.172
+#define DIAMETER_WHEEL 0.169
 
 #define LINEAR_X 1
 #define ANGULAR_Z 2
