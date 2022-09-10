@@ -36,13 +36,17 @@
 
 void main_motor(void);
 void setup_motor(void);
+void get_wheel_velocity(void);
+void set_wheel_velocity(void);
+void get_fb_wheel_velocity(void);
+void get_fb_robot_velocity(void);
 void CANopen_Activate(uint8_t CANopen_ID);
 void CANopen_Mode_SET(uint8_t CANopen_ID, uint8_t CANopen_mode);
 void SDO_Write_OD(uint8_t CANopen_ID, uint8_t CMD, uint16_t Index, uint8_t SubIndex, uint32_t DATA);
 void Motor_enable(void);
 void Write_Velocity_rpm(uint8_t CANopen_ID, uint32_t DATA);
 int32_t Read_Velocity_rpm(uint8_t CANopen_ID);
-float calculateRPM(uint8_t CANopen_ID, float linear_x, float angular_z);
-float calculate_vx_w(uint8_t v, float v_left, float v_right);
+float get_rpm_right();
+float get_rpm_left();
 
 #endif
