@@ -33,8 +33,10 @@ void main_motor(void)
   {
     
     int32_t right_ve, left_ve;
+
     right_ve = 0 -get_rpm_right();
     left_ve = get_rpm_left();
+
     Write_Velocity_rpm(Right_Wheel_ID, (int32_t)right_ve);
     Write_Velocity_rpm(Left_Wheel_ID, (int32_t)left_ve);
     
@@ -47,6 +49,7 @@ void main_motor(void)
 
 void setup_motor(void)
 {
+  // 1. Init CAN and Baudrate
   can1.begin();
   can1.setBaudRate(1000000);
   // 2. set thanh controllabe status: send: 000 01 02
