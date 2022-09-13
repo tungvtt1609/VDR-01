@@ -16,8 +16,6 @@
 extern uint8_t _charging_state;
 extern uint8_t battery_percent;
 
-extern int voltage;
-
 unsigned long prev_charging_time = 0;
 
 char read_basic_info[] = {0xDD, 0xA5, 0x03, 0x00, 0xFF, 0xFD, 0x77};
@@ -28,7 +26,6 @@ int read_index = 0;
 int data_index;
 char data_buffer[30];
 int vol_raw, cur_raw, remaining_capacity;
-extern int voltage;
 
 
 void Init_charge(void)
