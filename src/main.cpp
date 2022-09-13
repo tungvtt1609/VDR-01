@@ -28,8 +28,8 @@ std_msgs::UInt16 msg_right;
 ros::NodeHandle nh;
 
 ros::Subscriber<geometry_msgs::Twist> cmd_sub("cmd_vel", commandCallback);
-ros::Publisher pub_vel_left_feedback("cmd_feedback_left", &msg_left, 100);
-ros::Publisher pub_vel_right_feedback("cmd_feedback_right", &msg_right, 100);
+//ros::Publisher pub_vel_left_feedback("cmd_feedback_left", &msg_left, 100);
+//ros::Publisher pub_vel_right_feedback("cmd_feedback_right", &msg_right, 100);
 void setup()
 {
   Serial.begin(9600);
@@ -41,8 +41,8 @@ void setup()
   nh.initNode();
   nh.getHardware()->setBaud(57600);
   nh.subscribe(cmd_sub);
-  nh.advertise(pub_vel_right_feedback);
-  nh.advertise(pub_vel_left_feedback);
+  //nh.advertise(pub_vel_right_feedback);
+  //nh.advertise(pub_vel_left_feedback);
   threads.addThread(main_motor);
   threads.addThread(main_sensor);
   threads.addThread(main_charger);
@@ -56,8 +56,9 @@ void loop()
 {
   msg_left.data = velocity_L;
   msg_right.data = velocity_R;
-  pub_vel_left_feedback.publish(&msg_left);
-  pub_vel_right_feedback.publish(&msg_right);
+  //pub_vel_left_feedback.publish(&msg_left);
+  //threads
+  //pub_vel_right_feedback.publish(&msg_right);
   nh.spinOnce();
   threads.addThread(main_charger);
 }
