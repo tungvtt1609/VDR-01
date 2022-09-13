@@ -21,8 +21,6 @@ extern float g_req_linear_vel_z;
 extern int32_t velocity_L, velocity_R;
 
 extern uint8_t _sensor_state;
-#define ULTRA_LONG_DISTAN   1
-#define ULTRA_SHORT_DISTAN  2
 
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
 CAN_message_t msg;
