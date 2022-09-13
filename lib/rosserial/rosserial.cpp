@@ -22,10 +22,6 @@ extern int vol_raw;
 extern uint8_t battery_percent;
 extern uint8_t _charging_state;
 
-ros::NodeHandle nh;
-sensor_msgs::BatteryState bst_msg;
-ros::Publisher bst_pub("battery_state", &bst_msg);
-
 
 // ros::Publisher bst_pub = nh.advertise<sensor_msgs::BatteryState>("battery_state", 1000);
 // ros::Publisher<sensor_msgs::BatteryState> bst_pub("battery_state", BatteryStatePublisher);
