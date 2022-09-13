@@ -43,31 +43,6 @@ void main_led(void)
     // Low_battery_state();
     while (1)
     {
-        
-        // switch (_charging_state)
-        // {
-        // case CHARGING:
-        //     /* code */
-        //     Charging_state();
-        //     break;
-
-        // case LOW_BATTERY:
-        //     Low_battery_state();
-        //     break;
-
-        // case FULL_BATTERY:
-        //     Full_battery_state();
-        //     break;
-
-        // default:
-        //     Warning_state();
-        //     break;
-        // }
-
-        // if(_running_state == STOP){
-        //     Waiting_state();
-        // }
-
         if (_charging_state == CHARGING)
         {
             Charging_state();
@@ -87,10 +62,7 @@ void main_led(void)
         else
         {
             Normal_state();
-            // Warning_state();
-            //Full_battery_state();
         }
-        // Warning_state();
         threads.yield();
     }
 }
