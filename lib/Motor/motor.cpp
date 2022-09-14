@@ -28,6 +28,12 @@ CAN_message_t msg;
 void main_motor(void)
 {
   setup_motor();
+
+  // if(can1.available() < 0)
+  // {
+  //   Motor_disable();
+  // }
+
   while (1)
   {
     
@@ -70,6 +76,7 @@ void setup_motor(void)
   SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x60FF, 0x00, 0x00000000);
   // 4 enable
   Motor_enable();
+  
 }
 
 void get_wheel_velocity(void)
@@ -144,6 +151,13 @@ void Motor_enable(void)
   SDO_Write_OD(Left_Wheel_ID, SDO_W4, 0x6040, 0x00, 0x0F);
   SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x6040, 0x00, 0x0F);
   // Dong co chay voi toc do 60FFh sau khi enable
+}
+
+void Motor_disable(void)
+{
+  // set 6040h = 7 - Disable - send: 602 2B 40 60 00 06 00 00 00
+  SDO_Write_OD(Left_Wheel_ID, SDO_W4, 0x6040, 0x00, 0x07);
+  SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x6040, 0x00, 0x07);
 }
 
 void Write_Velocity_rpm(uint8_t CANopen_ID, uint32_t DATA)
