@@ -26,11 +26,12 @@ int read_index = 0;
 int data_index;
 char data_buffer[30];
 int vol_raw, cur_raw, remaining_capacity;
+float vol_index = 0;
 
 
 void Init_charge(void)
 {
-    Serial.begin(57600);
+    Serial.begin(9600);
     Serial2.begin(9600);
 }
 
@@ -52,7 +53,8 @@ void main_charger(void)
         Serial2.print(read_hardware_ver[i]);
     }
     delay(500);
-    // serialEvent2();
+
+
     while (1)
     {
         // get battery percent
@@ -63,17 +65,18 @@ void main_charger(void)
             {
                 prev_charging_time = millis();
                 threads.delay(10);
-                battery_percent = map(vol_raw, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
+                battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
                 threads.delay(10);
             }
         }
         else
         {
-            battery_percent = map(vol_raw, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
+            battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
+            // Serial.println(battery_percent);
         }
 
         // status charging, low_bat
-        if (vol_raw >= 2.5)
+        if (vol_index >= 2.5)
         {
             if (battery_percent >= 95)
             {
@@ -92,6 +95,7 @@ void main_charger(void)
         {
             _charging_state = NORMAL_BATTERY;
         }
+        // read_charger();
         threads.yield();
     }
 }
@@ -111,6 +115,7 @@ void read_charger(void)
         vol_raw = data_buffer[2] << 8 | data_buffer[3];
         cur_raw = data_buffer[4] << 8 | data_buffer[5];
         remaining_capacity = data_buffer[6] << 8 | data_buffer[7];
+        vol_index = vol_raw * 0.01;
         // Serial.print(vol_raw);
         data_index = 0;
         read_index = 0;
