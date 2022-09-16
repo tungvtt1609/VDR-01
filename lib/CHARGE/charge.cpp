@@ -31,7 +31,7 @@ float vol_index = 0;
 
 void Init_charge(void)
 {
-    Serial.begin(9600);
+    Serial.begin(57600);
     Serial2.begin(9600);
 }
 
