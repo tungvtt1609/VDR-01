@@ -11,6 +11,7 @@
 #include <Arduino.h>
 #include "pwm.h"
 #include "TeensyThreads.h"
+#include "motor.h"
 
 volatile long StartTimeFWD = 0;
 volatile long CurrentTimeFWD = 0;
