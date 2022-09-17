@@ -27,5 +27,34 @@ void setup_RC(void)
     Serial.begin(9600);
     pinMode(RCPinFWD, INPUT_PULLUP);
     pinMode(RCPinSide, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(RCPinFWD), PulsesTimerFWD, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(RCPinSide), PulsesTimerSide, CHANGE);
+}
 
+void main_pwm(void)
+{
+    if(PulsesFWD < 2000){
+        PulseWidthFWD = PulsesFWD;
+    }
+    if(PulsesSide < 2000){
+        PulseWidthSide = PulsesSide;
+    }
+    Serial.print(PulseWidthFWD);
+    Serial.print(PulseWidthSide);
+}
+
+void PulseTimerFWD(void){
+    CurrentTimeFWD = micros();
+    if(CurrentTimeFWD > StartTimeFWD){
+        PulsesFWD = CurrentTimeFWD - StartTimeFWD;
+        StartTimeFWD = CurrentTimeFWD;
+    }
+}
+
+void PulseTimerSide(void){
+    CurrentTimeSide = micros();
+    if(CurrentTimeSide > StartTimeSide){
+        PulsesSide = CurrentTimeSide - StartTimeSide;
+        StartTimeSide = CurrentTimeSide;
+    }
 }
