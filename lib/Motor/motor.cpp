@@ -205,3 +205,7 @@ float get_rpm_left()
   w_l_mins = w_l_s / PI * 30;
   return w_l_mins;
 }
+
+//biến từ RC(m/s) = g_req_linear_vel_x;
+
+//angular RC(rad/s) = g_req_linear_vel_z;

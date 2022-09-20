@@ -28,8 +28,8 @@ void setup_RC(void)
     Serial.begin(9600);
     pinMode(RCPinFWD, INPUT_PULLUP);
     pinMode(RCPinSide, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(RCPinFWD), PulsesTimerFWD, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(RCPinSide), PulsesTimerSide, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(RCPinFWD), PulseTimerFWD, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(RCPinSide), PulseTimerSide, CHANGE);
 }
 
 void main_pwm(void)
@@ -41,7 +41,8 @@ void main_pwm(void)
         PulseWidthSide = PulsesSide;
     }
     Serial.print(PulseWidthFWD);
-    Serial.print(PulseWidthSide);
+    Serial.print(" ");
+    Serial.println(PulseWidthSide);
 }
 
 void PulseTimerFWD(void){
