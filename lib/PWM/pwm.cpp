@@ -16,12 +16,18 @@
 volatile long StartTimeFWD = 0;
 volatile long CurrentTimeFWD = 0;
 volatile long PulsesFWD = 0;
-int PulseWidthFWD = 0;
+float PulseWidthFWD = 0;
+float resultFWD;
 
 volatile long StartTimeSide = 0;
 volatile long CurrentTimeSide = 0;
 volatile long PulsesSide = 0;
-int PulseWidthSide = 0;
+float PulseWidthSide = 0;
+float resultSide;
+
+extern float g_req_linear_vel_x;
+extern float g_req_linear_vel_y;
+extern float g_req_linear_vel_z;
 
 void setup_RC(void)
 {   
@@ -40,7 +46,15 @@ void main_pwm(void)
     if(PulsesSide < 2000){
         PulseWidthSide = PulsesSide;
     }
+
+    resultFWD = mapp(PulseWidthFWD, in_min, in_max, out_min, out_max);
+    resultSide = mapp(PulseWidthSide, in_min, in_max, out_min, out_max);
+
+    g_req_linear_vel_x = resultFWD;
+    g_req_linear_vel_z = resultSide;
+
     Serial.print(PulseWidthFWD);
+
     Serial.print(" ");
     Serial.println(PulseWidthSide);
 }
@@ -59,4 +73,8 @@ void PulseTimerSide(void){
         PulsesSide = CurrentTimeSide - StartTimeSide;
         StartTimeSide = CurrentTimeSide;
     }
+}
+
+long mapp(long x, long in_min, long in_max, long out_min, long out_max){
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
