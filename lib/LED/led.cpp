@@ -13,6 +13,7 @@
 #include <Arduino.h>
 #include "charge.h"
 #include "motor.h"
+#include "sensor.h"
 
 #define LIGHT_PIN 33
 #define LED_RGB_PIN 21
@@ -43,7 +44,11 @@ void main_led(void)
     // Low_battery_state();
     while (1)
     {
-        if (_charging_state == CHARGING)
+        if(_sensor_state == ULTRA_SHORT_DISTAN)
+        {
+            Warning_state();
+        } 
+        else if (_charging_state == CHARGING)
         {
             Charging_state();
         }
