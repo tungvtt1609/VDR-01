@@ -1,13 +1,13 @@
 #include <Arduino.h>
 #include "TeensyThreads.h"
 
-#define RCPinFWD 2
-#define RCPinSide 3
+#define RCPinFWD 3
+#define RCPinSide 4
 
-#define in_max 2000
-#define in_min 988
-#define out_max 1
-#define out_min -1
+long in_max  = 2000;
+long in_min  = 988;
+long out_max = 1;
+long out_min = -1;
 
 
 void setup_RC(void);
