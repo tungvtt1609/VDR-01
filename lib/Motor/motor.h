@@ -44,6 +44,7 @@ void CANopen_Activate(uint8_t CANopen_ID);
 void CANopen_Mode_SET(uint8_t CANopen_ID, uint8_t CANopen_mode);
 void SDO_Write_OD(uint8_t CANopen_ID, uint8_t CMD, uint16_t Index, uint8_t SubIndex, uint32_t DATA);
 void Motor_enable(void);
+void Motor_disable(void);
 void Write_Velocity_rpm(uint8_t CANopen_ID, uint32_t DATA);
 int32_t Read_Velocity_rpm(uint8_t CANopen_ID);
 float get_rpm_right();

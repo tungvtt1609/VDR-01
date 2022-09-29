@@ -22,19 +22,26 @@ extern int32_t velocity_L, velocity_R;
 
 extern uint8_t _sensor_state;
 
-
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
 CAN_message_t msg;
 
 void main_motor(void)
 {
   setup_motor();
+
+  // if(can1.available() < 0)
+  // {
+  //   Motor_disable();
+  // }
+
   while (1)
   {
     
     int32_t right_ve, left_ve;
+
     right_ve = 0 -get_rpm_right();
     left_ve = get_rpm_left();
+
     Write_Velocity_rpm(Right_Wheel_ID, (int32_t)right_ve);
     Write_Velocity_rpm(Left_Wheel_ID, (int32_t)left_ve);
     
@@ -47,6 +54,7 @@ void main_motor(void)
 
 void setup_motor(void)
 {
+  // 1. Init CAN and Baudrate
   can1.begin();
   can1.setBaudRate(1000000);
   // 2. set thanh controllabe status: send: 000 01 02
@@ -58,16 +66,17 @@ void setup_motor(void)
   // 3.2. set thoi gian thay doi toc do tu 0rpm den 3000rpm (tang toc 6083h, giam toc 6084h), don vi ms,
   // set 6083h = 1s - send: 602 23 83 60 00 E8 03 00 00
   // set 6084h = 1s - send: 602 23 84 60 00 E8 03 00 00
-  SDO_Write_OD(Left_Wheel_ID, SDO_W4, 0x6083, 0x00, 0x00004E20);
-  SDO_Write_OD(Left_Wheel_ID, SDO_W4, 0x6084, 0x00, 0x00004E20);
-  SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x6083, 0x00, 0x00004E20);
-  SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x6084, 0x00, 0x00004E20);
+  SDO_Write_OD(Left_Wheel_ID, SDO_W4, 0x6083, 0x00, 0x000013880);
+  SDO_Write_OD(Left_Wheel_ID, SDO_W4, 0x6084, 0x00, 0x0000C350);
+  SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x6083, 0x00, 0x000013880);
+  SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x6084, 0x00, 0x0000C350);
   // 3.3. Set toc do muc tieu: 60FFh,don vi 0,1rpm
   // set 60FFh = 10rpm - send: 602 23 FF 60 00 64 00 00 00
   SDO_Write_OD(Left_Wheel_ID, SDO_W4, 0x60FF, 0x00, 0x00000000);
   SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x60FF, 0x00, 0x00000000);
   // 4 enable
   Motor_enable();
+  
 }
 
 void get_wheel_velocity(void)
@@ -144,6 +153,13 @@ void Motor_enable(void)
   // Dong co chay voi toc do 60FFh sau khi enable
 }
 
+void Motor_disable(void)
+{
+  // set 6040h = 7 - Disable - send: 602 2B 40 60 00 06 00 00 00
+  SDO_Write_OD(Left_Wheel_ID, SDO_W4, 0x6040, 0x00, 0x07);
+  SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x6040, 0x00, 0x07);
+}
+
 void Write_Velocity_rpm(uint8_t CANopen_ID, uint32_t DATA)
 {
   DATA = DATA * 10;
@@ -189,3 +205,7 @@ float get_rpm_left()
   w_l_mins = w_l_s / PI * 30;
   return w_l_mins;
 }
+
+//biến từ RC(m/s) = g_req_linear_vel_x;
+
+//angular RC(rad/s) = g_req_linear_vel_z;
