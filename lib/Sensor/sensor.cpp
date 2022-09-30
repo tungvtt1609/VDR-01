@@ -14,7 +14,7 @@
 
 extern uint8_t _sensor_state;
 extern uint8_t _button_state;
-extern uint32_t sona_distance[3];
+extern uint8_t sona_distance[3];
 extern uint8_t proxi_sensor[2];
 
 Proximity proxi_1(PROXIMITY_PIN_1);
