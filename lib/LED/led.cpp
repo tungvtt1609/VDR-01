@@ -44,7 +44,7 @@ void main_led(void)
     // Low_battery_state();
     while (1)
     {
-        if(_sensor_state == ULTRA_SHORT_DISTAN)
+        if(_sensor_state == SONA_SHORT_DISTANCE)
         {
             Warning_state();
         } 

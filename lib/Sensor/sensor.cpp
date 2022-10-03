@@ -14,7 +14,7 @@
 
 extern uint8_t _sensor_state;
 extern uint8_t _button_state;
-extern uint32_t sona_distance[3];
+extern uint8_t sona_distance[3];
 extern uint8_t proxi_sensor[2];
 
 Proximity proxi_1(PROXIMITY_PIN_1);
@@ -82,7 +82,7 @@ void setup(void){
     digitalWrite(SSR_POWER_PIN, HIGH);
 }
 
-void Ultrasonic::Init_Sona(void)
+void SONA::Init_Sona(void)
 {
     pinMode(trigger_pin_, OUTPUT);
     pinMode(echo_pin_, INPUT);
@@ -93,9 +93,9 @@ void Proximity::Init_Prox(void)
     pinMode(proximity_pin_, INPUT);
 }
 
-uint32_t Ultrasonic::Get_Distance_cm(void)
+uint32_t SONA::Get_Distance_cm(void)
 {
-    Ultrasonic::Trigger_DYP();
+    SONA::Trigger_DYP();
     uint32_t duration, distanceCm;
     pinMode(echo_pin_, INPUT);
     duration = pulseIn(echo_pin_, HIGH, TIME_OUT);

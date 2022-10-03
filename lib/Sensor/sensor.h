@@ -25,7 +25,7 @@
 
 #define TRIGGER_1 8
 #define ECHO_1 7
-#define TRIGGER_1 24
+#define TRIGGER_2 24
 #define ECHO_2 25
 #define TRIGGER_3 29
 #define ECHO_3 28
