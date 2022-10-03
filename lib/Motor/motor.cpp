@@ -79,22 +79,6 @@ void setup_motor(void)
   
 }
 
-void get_wheel_velocity(void)
-{
-}
-
-void set_wheel_velocity(void)
-{
-}
-
-void get_fb_wheel_velocity(void)
-{
-}
-
-void get_fb_robot_velocity(void)
-{
-}
-
 void CANopen_Activate(uint8_t CANopen_ID)
 {
   msg.buf[0] = 0x01;
@@ -191,21 +175,18 @@ int32_t Read_Velocity_rpm(uint8_t CANopen_ID)
 float get_rpm_right()
 {
   float v_r, w_r_s, w_r_mins;
-  v_r = g_req_linear_vel_x + g_req_linear_vel_z * (PI / 30) * DISTANCE_WHEEL; // rad/s
+  v_r = g_req_linear_vel_x + (g_req_linear_vel_z * DISTANCE_WHEEL) / 2; // rad/s
   w_r_s = v_r / (DIAMETER_WHEEL / 2);
-  w_r_mins = w_r_s / PI * 30;
+  w_r_mins = (w_r_s * 30) / 2;
   return w_r_mins;
 }
 
 float get_rpm_left()
 {
   float v_l, w_l_s, w_l_mins;
-  v_l = g_req_linear_vel_x - g_req_linear_vel_z * PI / 30 * DISTANCE_WHEEL;
+  v_l = g_req_linear_vel_x - (g_req_linear_vel_z * DISTANCE_WHEEL) / 2;
   w_l_s = v_l / (DIAMETER_WHEEL / 2);
-  w_l_mins = w_l_s / PI * 30;
+  w_l_mins = (w_l_s * 30) / 2;
   return w_l_mins;
 }
 
-//biến từ RC(m/s) = g_req_linear_vel_x;
-
-//angular RC(rad/s) = g_req_linear_vel_z;
