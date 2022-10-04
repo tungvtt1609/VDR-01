@@ -22,11 +22,11 @@ char read_basic_info[] = {0xDD, 0xA5, 0x03, 0x00, 0xFF, 0xFD, 0x77};
 char read_cell_vol[] = {0xDD, 0xA5, 0x04, 0x00, 0xFF, 0xFC, 0x77};
 char read_hardware_ver[] = {0xDD, 0xA5, 0x05, 0x00, 0xFF, 0xFB, 0x77};
 
-int read_index = 0;
-int data_index;
+volatile int read_index = 0;
+volatile int data_index;
 char data_buffer[30];
-int vol_raw, cur_raw, remaining_capacity;
-float vol_index = 0;
+volatile int vol_raw, cur_raw, remaining_capacity;
+volatile float vol_index = 0;
 
 
 void Init_charge(void)

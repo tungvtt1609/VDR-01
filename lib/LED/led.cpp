@@ -15,12 +15,6 @@
 #include "motor.h"
 #include "sensor.h"
 
-#define LIGHT_PIN 33
-#define LED_RGB_PIN 21
-
-#define NUMPIXELS 20
-#define BRIGHTNESS 50
-
 Adafruit_NeoPixel pixels(NUMPIXELS, LED_RGB_PIN, NEO_GRB + NEO_KHZ800);
 
 uint8_t j_in_state = 0;
@@ -30,18 +24,9 @@ extern uint8_t _charging_state;
 extern uint8_t _sensor_state;
 extern uint8_t _running_state;
 
-#define RGB_RED pixels.Color(255, 0, 0)
-#define RGB_GREEN pixels.Color(0, 255, 0)
-#define RGB_BLUE pixels.Color(0, 0, 255)
-#define RGB_WHITE pixels.Color(127, 127, 127)
-#define RGB_YELLOW pixels.Color(255, 255, 0)
-
 void main_led(void)
 {
     Init_led();
-    // Normal_state();
-    // Warning_state();
-    // Low_battery_state();
     while (1)
     {
         if(_sensor_state == SONA_SHORT_DISTANCE)

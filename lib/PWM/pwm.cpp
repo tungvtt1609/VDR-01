@@ -16,18 +16,14 @@
 volatile long StartTimeFWD = 0;
 volatile long CurrentTimeFWD = 0;
 volatile long PulsesFWD = 0;
-float PulseWidthFWD = 0;
-float resultFWD;
+volatile float PulseWidthFWD = 0;
+volatile float resultFWD;
 
 volatile long StartTimeSide = 0;
 volatile long CurrentTimeSide = 0;
 volatile long PulsesSide = 0;
-float PulseWidthSide = 0;
-float resultSide;
-
-extern float g_req_linear_vel_x;
-extern float g_req_linear_vel_y;
-extern float g_req_linear_vel_z;
+volatile float PulseWidthSide = 0;
+volatile float resultSide;
 
 void setup_RC(void)
 {   
@@ -40,23 +36,45 @@ void setup_RC(void)
 
 void main_pwm(void)
 {
+    float vel_right, vel_left;
+
+    // Velocity Linear
     if(PulsesFWD < 2000){
         PulseWidthFWD = PulsesFWD;
     }
+
+    if(abs(PulseWidthFWD - 1495) < 20)
+    {
+        vel_RC_linear = 0.0;
+    } 
+    else 
+    {
+        vel_RC_linear = mapp(PulseWidthFWD, in_min, in_max, out_min_v, out_max_v);
+    }
+
+    // Velocity angular
     if(PulsesSide < 2000){
         PulseWidthSide = PulsesSide;
     }
 
-    resultFWD = mapp(PulseWidthFWD, in_min, in_max, out_min, out_max);
-    resultSide = mapp(PulseWidthSide, in_min, in_max, out_min, out_max);
+    if(abs(PulseWidthSide - 1495) < 20)
+    {
+        vel_RC_angular = 0.0;
+    } 
+    else 
+    {
+        vel_RC_angular = mapp(PulseWidthSide, in_min, in_max, out_min_w, out_max_w);
+    }
 
-    g_req_linear_vel_x = resultFWD;
-    g_req_linear_vel_z = resultSide;
+    vel_right = 0 - get_rpm_right_RC();
+    vel_left  = get_rpm_left_RC();
 
-    Serial.print(PulseWidthFWD);
+    Write_Velocity_rpm(Right_Wheel_ID, (int32_t)vel_right);
+    Write_Velocity_rpm(Left_Wheel_ID, (int32_t)vel_left);
 
-    Serial.print(" ");
-    Serial.println(PulseWidthSide);
+    // Serial.print(PulseWidthFWD);
+    // Serial.print(" ");
+    // Serial.println(PulseWidthSide);
 }
 
 void PulseTimerFWD(void){
@@ -73,6 +91,22 @@ void PulseTimerSide(void){
         PulsesSide = CurrentTimeSide - StartTimeSide;
         StartTimeSide = CurrentTimeSide;
     }
+}
+
+float get_rpm_right_RC(){
+    float linear_vel_right, angular_vel_right_s, angular_vel_right_mins_RC;
+    linear_vel_right = vel_RC_linear + (vel_RC_angular * DISTANCE_WHEEL) / 2;
+    angular_vel_right_s = linear_vel_right / (DIAMETER_WHEEL / 2); // rad/s
+    angular_vel_right_mins_RC = (angular_vel_right_s * 30) / 2;
+    return angular_vel_right_mins_RC;
+}
+
+float get_rpm_left_RC(){
+    float linear_vel_left, angular_vel_left_s, angular_vel_left_mins_RC;
+    linear_vel_leftlinear_vel_left = vel_RC_linear - (vel_RC_angular * DISTANCE_WHEEL) / 2;
+    angular_vel_left_s = linear_vel_right / (DIAMETER_WHEEL / 2); // rad/s
+    angular_vel_left_mins_RC = (angular_vel_right_s * 30) / 2;
+    return angular_vel_left_mins_RC;
 }
 
 long mapp(long x, long in_min, long in_max, long out_min, long out_max){

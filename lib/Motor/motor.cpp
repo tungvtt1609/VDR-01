@@ -36,7 +36,6 @@ void main_motor(void)
 
   while (1)
   {
-    
     int32_t right_ve, left_ve;
 
     right_ve = 0 -get_rpm_right();
