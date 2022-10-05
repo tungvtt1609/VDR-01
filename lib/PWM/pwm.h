@@ -4,7 +4,7 @@
 #define RCPinFWD 3
 #define RCPinSide 4
 
-#define in_max 2000
+#define in_max 1998
 #define in_min 988
 
 #define out_max_w 1
@@ -16,7 +16,7 @@
 void setup_RC(void);
 void main_pwm(void);
 void PulseTimerFWD(void);
-float get_rpm_right_RC()
+float get_rpm_right_RC();
 float get_rpm_left_RC();
-long mapp(long x, long in_min, long in_max, long out_min, long out_max);
+long mapp(long x, long y, long z, long v, long t);
 void PulseTimerSide(void);

@@ -24,6 +24,8 @@ volatile long CurrentTimeSide = 0;
 volatile long PulsesSide = 0;
 volatile float PulseWidthSide = 0;
 volatile float resultSide;
+volatile float vel_RC_linear = 0;
+volatile float vel_RC_angular = 0;
 
 void setup_RC(void)
 {   
@@ -103,12 +105,12 @@ float get_rpm_right_RC(){
 
 float get_rpm_left_RC(){
     float linear_vel_left, angular_vel_left_s, angular_vel_left_mins_RC;
-    linear_vel_leftlinear_vel_left = vel_RC_linear - (vel_RC_angular * DISTANCE_WHEEL) / 2;
-    angular_vel_left_s = linear_vel_right / (DIAMETER_WHEEL / 2); // rad/s
-    angular_vel_left_mins_RC = (angular_vel_right_s * 30) / 2;
+    linear_vel_left = vel_RC_linear - (vel_RC_angular * DISTANCE_WHEEL) / 2;
+    angular_vel_left_s = linear_vel_left / (DIAMETER_WHEEL / 2); // rad/s
+    angular_vel_left_mins_RC = (angular_vel_left_s * 30) / 2;
     return angular_vel_left_mins_RC;
 }
 
-long mapp(long x, long in_min, long in_max, long out_min, long out_max){
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+long mapp(long x, long y, long z, long v, long t){
+    return (x - in_min) * (t - v) / (z - y) + v;
 }
