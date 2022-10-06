@@ -34,10 +34,16 @@ void setup_RC(void)
     pinMode(RCPinSide, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(RCPinFWD), PulseTimerFWD, CHANGE);
     attachInterrupt(digitalPinToInterrupt(RCPinSide), PulseTimerSide, CHANGE);
+
+    PulseTimerFWD();
+    PulseTimerSide();
+    mapp(PulseWidthFWD, in_min, in_max, out_min_v, out_max_v);
+    mapp(PulseWidthSide, in_min, in_max, out_min_w, out_max_w);
 }
 
 void main_pwm(void)
 {
+    setup_RC();
     float vel_right, vel_left;
 
     // Velocity Linear
@@ -74,9 +80,6 @@ void main_pwm(void)
     Write_Velocity_rpm(Right_Wheel_ID, (int32_t)vel_right);
     Write_Velocity_rpm(Left_Wheel_ID, (int32_t)vel_left);
 
-    // Serial.print(PulseWidthFWD);
-    // Serial.print(" ");
-    // Serial.println(PulseWidthSide);
 }
 
 void PulseTimerFWD(void){

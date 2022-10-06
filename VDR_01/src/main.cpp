@@ -20,7 +20,6 @@ float g_req_linear_vel_x = 0;    // vx nhan duoc tu Jetson
 float g_req_linear_vel_y = 0;    // vy nhan duoc tu Jetson
 float g_req_linear_vel_z = 0;    // w nhan duoc tu Jetson
 int32_t velocity_L, velocity_R;  // Khai bao de in ra, ti nua k dung thi xoa
-int voltage;
 extern int vol_raw;
 extern float vol_index;
 
@@ -52,8 +51,8 @@ void loop()
 {
   msg_left.data = velocity_L;
   msg_right.data = velocity_R;
-  //pub_vel_left_feedback.publish(&msg_left);
-  //pub_vel_right_feedback.publish(&msg_right);
+  // pub_vel_left_feedback.publish(&msg_left);
+  // pub_vel_right_feedback.publish(&msg_right);
   nh.spinOnce();
   threads.addThread(main_charger);
   threads.addThread(main_pwm);
