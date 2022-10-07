@@ -56,6 +56,7 @@ void loop()
   nh.spinOnce();
   threads.addThread(main_charger);
   threads.addThread(main_pwm);
+  threads.delay(1000);
   // Serial.println(vol_index);
   // Serial.println(battery_percent);
   // threads.delay(1000);
