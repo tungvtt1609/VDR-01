@@ -110,19 +110,19 @@ void PulseTimerSide(void){
 }
 
 float get_rpm_right_RC(){
-    float linear_vel_right, angular_vel_right_s, angular_vel_right_mins_RC;
+    float angular_vel_right_s, angular_vel_right_mins_RC;
     angular_vel_right_s = (vel_RC_linear + vel_RC_angular * (DISTANCE_WHEEL / 2)) / (DIAMETER_WHEEL / 2); // rad/s
     angular_vel_right_mins_RC = (angular_vel_right_s / PI) * 30;
     return angular_vel_right_mins_RC;
 }
 
 float get_rpm_left_RC(){
-    float linear_vel_left, angular_vel_left_s, angular_vel_left_mins_RC;
-    angular_vel_right_s = (vel_RC_linear - vel_RC_angular * (DISTANCE_WHEEL / 2)) / (DIAMETER_WHEEL / 2); // rad/s
-    angular_vel_right_mins_RC = (angular_vel_right_s / PI) * 30;
+    float angular_vel_left_s, angular_vel_left_mins_RC;
+    angular_vel_left_s = (vel_RC_linear - vel_RC_angular * (DISTANCE_WHEEL / 2)) / (DIAMETER_WHEEL / 2); // rad/s
+    angular_vel_left_mins_RC = (angular_vel_right_s / PI) * 30;
     return angular_vel_left_mins_RC;
 }
 
 long mapp(long x, long y, long z, long v, long t){
-    return (x - in_min) * (t - v) / (z - y) + v;
+    return (x - y) * (t - v) / (z - y) + v;
 }
