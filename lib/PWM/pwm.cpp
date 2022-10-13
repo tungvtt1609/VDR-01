@@ -119,7 +119,7 @@ float get_rpm_right_RC(){
 float get_rpm_left_RC(){
     float angular_vel_left_s, angular_vel_left_mins_RC;
     angular_vel_left_s = (vel_RC_linear - vel_RC_angular * (DISTANCE_WHEEL / 2)) / (DIAMETER_WHEEL / 2); // rad/s
-    angular_vel_left_mins_RC = (angular_vel_right_s / PI) * 30;
+    angular_vel_left_mins_RC = (angular_vel_left_s / PI) * 30;
     return angular_vel_left_mins_RC;
 }
 
