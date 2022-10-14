@@ -34,10 +34,15 @@ void setup_RC(void)
     pinMode(RCPinSide, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(RCPinFWD), PulseTimerFWD, CHANGE);
     attachInterrupt(digitalPinToInterrupt(RCPinSide), PulseTimerSide, CHANGE);
+    PulseTimerFWD();
+    PulseTimerSide();
+    mapp(PulseWidthFWD, in_min, in_max, out_min_v, out_max_v);
+    mapp(PulseWidthSide, in_min, in_max, out_min_w, out_max_w);
 }
 
 void main_pwm(void)
 {
+    setup_RC();
     float vel_right, vel_left;
 
     // Velocity Linear
