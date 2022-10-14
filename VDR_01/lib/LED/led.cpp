@@ -29,11 +29,11 @@ void main_led(void)
     Init_led();
     while (1)
     {
-        if(_sensor_state == SONA_SHORT_DISTANCE)
-        {
-            Warning_state();
-        } 
-        else if (_charging_state == CHARGING)
+        // if(_sensor_state == SONA_SHORT_DISTANCE)
+        // {
+        //     Warning_state();
+        // } 
+        if (_charging_state == CHARGING)
         {
             Charging_state();
         }

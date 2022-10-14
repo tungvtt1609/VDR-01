@@ -6,6 +6,7 @@
 #include "rosserial.h"
 #include <std_msgs/UInt16.h>
 #include "sensor.h"
+#include "pwm.h"
 
 
 uint8_t _button_state = 0;       // trang thai nut nhan gan nhat
@@ -43,6 +44,7 @@ void setup()
   threads.addThread(main_sensor);
   threads.addThread(main_charger);
   threads.addThread(main_led);
+  threads.addThread(main_pwm);
   // _charging_state = NORMAL_BATTERY;
 }
 
@@ -55,8 +57,9 @@ void loop()
   //pub_vel_right_feedback.publish(&msg_right);
   nh.spinOnce();
   threads.addThread(main_charger);
-  Serial.println(vol_index);
-  Serial.println(battery_percent);
-  threads.delay(1000);
+  threads.addThread(main_pwm);
+  // Serial.println(vol_index);
+  // Serial.println(battery_percent);
+  // threads.delay(1000);
   threads.yield();
 }

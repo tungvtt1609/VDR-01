@@ -173,19 +173,17 @@ int32_t Read_Velocity_rpm(uint8_t CANopen_ID)
 
 float get_rpm_right()
 {
-  float v_r, w_r_s, w_r_mins;
-  v_r = g_req_linear_vel_x + (g_req_linear_vel_z * DISTANCE_WHEEL) / 2; // rad/s
-  w_r_s = v_r / (DIAMETER_WHEEL / 2);
-  w_r_mins = (w_r_s * 30) / 2;
-  return w_r_mins;
+  float angular_vel_right_s, angular_vel_right_mins;
+  angular_vel_right_s = (g_req_linear_vel_x + g_req_linear_vel_z * (DISTANCE_WHEEL / 2)) / (DIAMETER_WHEEL / 2); // rad/s
+  angular_vel_right_mins = (angular_vel_right_s / PI) * 30;
+  return angular_vel_right_mins;
 }
 
 float get_rpm_left()
 {
-  float v_l, w_l_s, w_l_mins;
-  v_l = g_req_linear_vel_x - (g_req_linear_vel_z * DISTANCE_WHEEL) / 2;
-  w_l_s = v_l / (DIAMETER_WHEEL / 2);
-  w_l_mins = (w_l_s * 30) / 2;
-  return w_l_mins;
+  float angular_vel_left_s, angular_vel_left_mins;
+  angular_vel_left_s = (g_req_linear_vel_x - g_req_linear_vel_z * (DISTANCE_WHEEL / 2)) / (DIAMETER_WHEEL / 2); // rad/s
+  angular_vel_left_mins = (angular_vel_left_s / PI) * 30;
+  return angular_vel_left_mins;
 }
 

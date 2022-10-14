@@ -6,10 +6,18 @@
 #include "rosserial.h"
 #include <std_msgs/UInt16.h>
 #include "sensor.h"
+<<<<<<< HEAD
 
 
 uint8_t _button_state = 0;       // trang thai nut nhan gan nhat
 uint8_t _motion_state = 0;       // trang thai chuyen dong
+=======
+#include "pwm.h"
+
+
+// uint8_t _button_state = 0;       // trang thai nut nhan gan nhat
+// uint8_t _motion_state = 0;       // trang thai chuyen dong
+>>>>>>> ca4796aa6fc6dde324035d746e21b4a66d5ef8be
 uint8_t _sensor_state = 0;       // trang thai nhan biet co vat can hay k
 uint8_t _charging_state = 0;     // trang thai pin hoac dang sac
 uint8_t _running_state = 0;      // trang thai Robot dang dung hoac dang chay
@@ -19,7 +27,10 @@ float g_req_linear_vel_x = 0;    // vx nhan duoc tu Jetson
 float g_req_linear_vel_y = 0;    // vy nhan duoc tu Jetson
 float g_req_linear_vel_z = 0;    // w nhan duoc tu Jetson
 int32_t velocity_L, velocity_R;  // Khai bao de in ra, ti nua k dung thi xoa
+<<<<<<< HEAD
 int voltage;
+=======
+>>>>>>> ca4796aa6fc6dde324035d746e21b4a66d5ef8be
 extern int vol_raw;
 extern float vol_index;
 
@@ -43,6 +54,10 @@ void setup()
   threads.addThread(main_sensor);
   threads.addThread(main_charger);
   threads.addThread(main_led);
+<<<<<<< HEAD
+=======
+  threads.addThread(main_pwm);
+>>>>>>> ca4796aa6fc6dde324035d746e21b4a66d5ef8be
   // _charging_state = NORMAL_BATTERY;
 }
 
@@ -50,6 +65,7 @@ void loop()
 {
   msg_left.data = velocity_L;
   msg_right.data = velocity_R;
+<<<<<<< HEAD
   //pub_vel_left_feedback.publish(&msg_left);
 
   //pub_vel_right_feedback.publish(&msg_right);
@@ -58,5 +74,16 @@ void loop()
   Serial.println(vol_index);
   Serial.println(battery_percent);
   threads.delay(1000);
+=======
+  // pub_vel_left_feedback.publish(&msg_left);
+  // pub_vel_right_feedback.publish(&msg_right);
+  nh.spinOnce();
+  threads.addThread(main_charger);
+  threads.addThread(main_pwm);
+  threads.delay(1000);
+  // Serial.println(vol_index);
+  // Serial.println(battery_percent);
+  // threads.delay(1000);
+>>>>>>> ca4796aa6fc6dde324035d746e21b4a66d5ef8be
   threads.yield();
 }
