@@ -62,7 +62,7 @@ void main_pwm(void)
         } 
         else 
         {
-            vel_RC_linear = mapp(PulseWidthFWD, in_min, in_max, out_min_v, out_max_v);
+            vel_RC_linear = (PulseWidthFWD - in_min) * (out_max_v - out_min_v) / (in_max - in_min) + out_min_v;
         }
 
         // Velocity angular
@@ -76,7 +76,7 @@ void main_pwm(void)
         } 
         else 
         {
-            vel_RC_angular = mapp(PulseWidthSide, in_min, in_max, out_min_w, out_max_w);
+            vel_RC_angular = (PulseWidthSide - in_min) * (out_max_w - out_min_w) / (in_max - in_min) + out_min_w;
         }
 
         vel_right = 0 - get_rpm_right_RC();
@@ -84,10 +84,6 @@ void main_pwm(void)
 
         Write_Velocity_rpm(Right_Wheel_ID, (int32_t)vel_right);
         Write_Velocity_rpm(Left_Wheel_ID, (int32_t)vel_left);
-
-        // Serial.print(PulseWidthFWD);
-        // Serial.print(" ");
-        // Serial.println(PulseWidthSide);
 
     }
     
