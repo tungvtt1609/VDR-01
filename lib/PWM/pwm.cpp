@@ -37,8 +37,7 @@ void setup_RC(void)
 
     get_rpm_right_RC();
     get_rpm_left_RC();
-    mapp(PulseWidthFWD, in_min, in_max, out_min_v, out_max_v);
-    mapp(PulseWidthSide, in_min, in_max, out_min_w, out_max_w);
+    
     PulseTimerSide();
     PulseTimerFWD();
 }
@@ -79,8 +78,21 @@ void main_pwm(void)
             vel_RC_angular = (PulseWidthSide - in_min) * (out_max_w - out_min_w) / (in_max - in_min) + out_min_w;
         }
 
-        vel_right = 0 - get_rpm_right_RC();
-        vel_left  = get_rpm_left_RC();
+        // Check condition active
+        if(analogRead(RCPinFWD) == 0 && analogRead(RCPinSide) == 0)
+        {
+            vel_left = 0.0;
+            vel_right = 0.0;
+            Motor_disable();
+        }
+        else
+        {
+            vel_right = 0 - get_rpm_right_RC();
+            vel_left  = get_rpm_left_RC();    
+        }
+
+        // vel_right = 0 - get_rpm_right_RC();
+        // vel_left  = get_rpm_left_RC();
 
         Write_Velocity_rpm(Right_Wheel_ID, (int32_t)vel_right);
         Write_Velocity_rpm(Left_Wheel_ID, (int32_t)vel_left);
