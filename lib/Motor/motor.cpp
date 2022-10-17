@@ -38,7 +38,7 @@ void main_motor(void)
   {
     int32_t right_ve, left_ve;
 
-    right_ve = 0 -get_rpm_right();
+    right_ve = 0 - get_rpm_right();
     left_ve = get_rpm_left();
 
     Write_Velocity_rpm(Right_Wheel_ID, (int32_t)right_ve);
