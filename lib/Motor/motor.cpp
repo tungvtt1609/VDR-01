@@ -29,11 +29,6 @@ void main_motor(void)
 {
   setup_motor();
 
-  // if(can1.available() < 0)
-  // {
-  //   Motor_disable();
-  // }
-
   while (1)
   {
     int32_t right_ve, left_ve;
@@ -73,7 +68,7 @@ void setup_motor(void)
   // set 60FFh = 10rpm - send: 602 23 FF 60 00 64 00 00 00
   SDO_Write_OD(Left_Wheel_ID, SDO_W4, 0x60FF, 0x00, 0x00000000);
   SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x60FF, 0x00, 0x00000000);
-  // 4 enable
+  // 4. enable
   Motor_enable();
   
 }
