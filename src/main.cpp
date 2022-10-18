@@ -23,6 +23,7 @@ int32_t velocity_L, velocity_R;  // Khai bao de in ra, ti nua k dung thi xoa
 int voltage;
 extern int vol_raw;
 extern float vol_index;
+extern bool STATE_ROS;
 
 std_msgs::UInt16 msg_left;
 std_msgs::UInt16 msg_right;
@@ -35,6 +36,8 @@ void setup()
 {
   Serial.begin(9600);
 
+  STATE_ROS = true;
+
   nh.initNode();
   nh.getHardware()->setBaud(57600);
   nh.subscribe(cmd_sub);
@@ -44,7 +47,7 @@ void setup()
   threads.addThread(main_sensor);
   threads.addThread(main_charger);
   threads.addThread(main_led);
-  // threads.addThread(main_pwm);
+  threads.addThread(main_pwm);
   // _charging_state = NORMAL_BATTERY;
 }
 
@@ -52,12 +55,13 @@ void loop()
 {
   msg_left.data = velocity_L;
   msg_right.data = velocity_R;
+
   //pub_vel_left_feedback.publish(&msg_left);
 
   //pub_vel_right_feedback.publish(&msg_right);
   nh.spinOnce();
   threads.addThread(main_charger);
-  // threads.addThread(main_pwm);
+  threads.addThread(main_pwm);
   // Serial.println(vol_index);
   // Serial.println(battery_percent);
   // threads.delay(1000);

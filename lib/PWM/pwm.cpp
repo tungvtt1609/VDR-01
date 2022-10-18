@@ -26,6 +26,7 @@ volatile float PulseWidthSide = 0;
 volatile float resultSide;
 volatile float vel_RC_linear = 0;
 volatile float vel_RC_angular = 0;
+extern bool STATE_ROS = true;
 
 void setup_RC(void)
 {   
@@ -49,6 +50,16 @@ void main_pwm(void)
     while (1){
 
         float vel_right, vel_left;
+
+        if((1600 < PulsesFWD < 2000) || (988 < PulsesFWD < 1400))
+        {
+            STATE_ROS = false;
+        }
+
+        if((1600 < PulsesSide < 2000) || (988 < PulsesSide < 1400))
+        {
+            STATE_ROS = false;
+        }
 
         // Velocity Linear
         if(PulsesFWD < 2000){
@@ -77,20 +88,28 @@ void main_pwm(void)
         {
             vel_RC_angular = (PulseWidthSide - in_min) * (out_max_w - out_min_w) / (in_max - in_min) + out_min_w;
         }
-
+        // Serial.print("ok");
         // Check condition active
-        if(analogRead(RCPinFWD) == 0 && analogRead(RCPinSide) == 0)
+        if(digitalPinToInterrupt(RCPinFWD) == 0 || digitalPinToInterrupt(RCPinSide) == 0)
         {
+            Serial.print("stop");
             vel_left = 0.0;
             vel_right = 0.0;
-            Motor_disable();
+            // Motor_disable();
         }
         else
         {
             vel_right = 0 - get_rpm_right_RC();
             vel_left  = get_rpm_left_RC();    
         }
+        
+        Serial.print("RCPinFWD: ");
+        Serial.println(RCPinFWD);
+        // delay(1000);
 
+        Serial.print("RCPinSide: ");
+        Serial.println(RCPinSide);
+        // delay(1000);
         // vel_right = 0 - get_rpm_right_RC();
         // vel_left  = get_rpm_left_RC();
 
