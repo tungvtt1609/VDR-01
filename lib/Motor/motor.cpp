@@ -31,6 +31,10 @@ void main_motor(void)
 
   while (1)
   {
+    if(can1.read(msg) < 0){
+      Motor_disable();
+    }
+
     int32_t right_ve, left_ve;
 
     right_ve = 0 - get_rpm_right();
@@ -70,8 +74,10 @@ void setup_motor(void)
   SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x60FF, 0x00, 0x00000000);
   // 4. enable
   Motor_enable();
+  // Motor_disable();
   
 }
+
 
 void CANopen_Activate(uint8_t CANopen_ID)
 {

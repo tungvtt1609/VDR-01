@@ -45,9 +45,9 @@ void BatteryStatePublisher(const sensor_msgs::BatteryState &bst_msg)
 
 void commandCallback(const geometry_msgs::Twist &cmd_msg)
 {
-    if (!STATE_ROS)
+    if (STATE_ROS == false)
     {
-        g_req_linear_vel_x =0;
+        g_req_linear_vel_x = 0;
         g_req_linear_vel_y = 0;
         g_req_linear_vel_z = 0;
     }
