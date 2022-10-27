@@ -61,9 +61,11 @@ void loop()
   nh.spinOnce();
   threads.addThread(main_charger);
   threads.addThread(main_motor);
-  // threads.addThread(main_pwm);
-  // Serial.println(vol_index);
-  // Serial.println(battery_percent);
-  // threads.delay(1000);
+  
+  Serial.print("velocity_R:");
+  Serial.println(velocity_R);
+
+  Serial.print("velocity_L:");
+  Serial.println(velocity_L);
   threads.yield();
 }
