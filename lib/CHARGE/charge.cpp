@@ -26,13 +26,13 @@ volatile int read_index = 0;
 volatile int data_index;
 char data_buffer[30];
 volatile int vol_raw, cur_raw, remaining_capacity;
-volatile float vol_index = 0;
+float vol_index = 0;
 
 
 void Init_charge(void)
 {
     Serial.begin(57600);
-    Serial2.begin(9600);
+    Serial1.begin(9600);
 }
 
 void main_charger(void)
@@ -40,17 +40,17 @@ void main_charger(void)
     Init_charge();
     for (int i = 0; i < 7; i++)
     {
-        Serial2.print(read_basic_info[i]);
+        Serial1.print(read_basic_info[i]);
     }
     delay(500);
     for (int i = 0; i < 7; i++)
     {
-        Serial2.print(read_cell_vol[i]);
+        Serial1.print(read_cell_vol[i]);
     }
     delay(500);
     for (int i = 0; i < 7; i++)
     {
-        Serial2.print(read_hardware_ver[i]);
+        Serial1.print(read_hardware_ver[i]);
     }
     delay(500);
 
@@ -103,7 +103,7 @@ void main_charger(void)
 // Read RS485 from PIN
 void read_charger(void)
 {
-    char inChar = (char)Serial2.read();
+    char inChar = (char)Serial1.read();
     if (read_index == 2)
     {
         data_buffer[data_index] = inChar;

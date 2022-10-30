@@ -18,7 +18,7 @@ extern uint8_t _running_state;
 extern float g_req_linear_vel_x;
 extern float g_req_linear_vel_y;
 extern float g_req_linear_vel_z;
-extern int32_t velocity_L, velocity_R;
+int32_t velocity_L, velocity_R;
 
 extern uint8_t _sensor_state;
 
