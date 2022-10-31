@@ -29,19 +29,19 @@ extern uint8_t _charging_state;
 
 // ros::Subscriber<geometry_msgs::Twist> cmd_sub("cmd_vel", commandCallback);
 
-void BatteryStatePublisher(const sensor_msgs::BatteryState &bst_msg)
-{
-    battery_percent = bst_msg.percentage;
+// void BatteryStatePublisher(const sensor_msgs::BatteryState &bst_msg)
+// {
+//     battery_percent = bst_msg.percentage;
 
-    if(battery_percent >= 95){
-        _charging_state = bst_msg.POWER_SUPPLY_STATUS_FULL;
-        vol_raw = bst_msg.voltage;
-    }
-    else{
-        _charging_state = bst_msg.POWER_SUPPLY_STATUS_CHARGING;
-        vol_raw = bst_msg.voltage;
-    }  
-}
+//     if(battery_percent >= 95){
+//         _charging_state = bst_msg.POWER_SUPPLY_STATUS_FULL;
+//         vol_raw = bst_msg.voltage;
+//     }
+//     else{
+//         _charging_state = bst_msg.POWER_SUPPLY_STATUS_CHARGING;
+//         vol_raw = bst_msg.voltage;
+//     }  
+// }
 
 void commandCallback(const geometry_msgs::Twist &cmd_msg)
 {
