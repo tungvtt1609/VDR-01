@@ -32,8 +32,8 @@ std_msgs::Float32 msg_bat;
 ros::NodeHandle nh;
 
 ros::Subscriber<geometry_msgs::Twist> cmd_sub("cmd_vel", commandCallback);
-ros::Publisher pub_vel_left_feedback("cmd_feedback_left", &msg_left);
-ros::Publisher pub_vel_right_feedback("cmd_feedback_right", &msg_right);
+ros::Publisher pub_vel_left_fb("cmd_feedback_left", &msg_left);
+ros::Publisher pub_vel_right_fb("cmd_feedback_right", &msg_right);
 ros::Publisher pub_vol_fb("cmd_vol_fb", &msg_vol);
 ros::Publisher pub_bat_fb("cmd_bat_fb", &msg_bat);
 void setup()
@@ -46,8 +46,8 @@ void setup()
   nh.getHardware()->setBaud(57600);
   nh.subscribe(cmd_sub);
 
-  nh.advertise(pub_vel_right_feedback);
-  nh.advertise(pub_vel_left_feedback);
+  nh.advertise(pub_vel_right_fb);
+  nh.advertise(pub_vel_left_fb);
 
   nh.advertise(pub_vol_fb);
   nh.advertise(pub_bat_fb);  
@@ -67,8 +67,8 @@ void loop()
   msg_bat.data = battery_percent;
   msg_vol.data = vol_index;
 
-  pub_vel_left_feedback.publish(&msg_left);
-  pub_vel_right_feedback.publish(&msg_right);
+  pub_vel_left_fb.publish(&msg_left);
+  pub_vel_right_fb.publish(&msg_right);
 
   pub_vol_fb.publish(&msg_vol);
   pub_bat_fb.publish(&msg_bat);
