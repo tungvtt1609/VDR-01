@@ -74,7 +74,7 @@ void setup_motor(void)
   SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x60FF, 0x00, 0x00000000);
   // 4. enable
   Motor_enable();
-  // Motor_disable();
+  Motor_disable();
   
 }
 

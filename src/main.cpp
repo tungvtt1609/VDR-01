@@ -56,8 +56,7 @@ void setup()
   threads.addThread(main_sensor);
   threads.addThread(main_charger);
   threads.addThread(main_led);
-  // threads.addThread(main_pwm);
-  // _charging_state = NORMAL_BATTERY;
+
 }
 
 void loop()
@@ -79,11 +78,6 @@ void loop()
   threads.addThread(main_charger);
   threads.addThread(main_motor);
   
-  // Serial.print("velocity_R:");
-  // Serial.println(velocity_R);
-
-  Serial.print("vol:");
-  Serial.println(vol_index);
   threads.yield();
 
   nh.spinOnce();
