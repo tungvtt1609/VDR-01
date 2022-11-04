@@ -23,26 +23,6 @@ extern int vol_raw;
 extern uint8_t battery_percent;
 extern uint8_t _charging_state;
 
-
-// ros::Publisher bst_pub = nh.advertise<sensor_msgs::BatteryState>("battery_state", 1000);
-// ros::Publisher<sensor_msgs::BatteryState> bst_pub("battery_state", BatteryStatePublisher);
-
-// ros::Subscriber<geometry_msgs::Twist> cmd_sub("cmd_vel", commandCallback);
-
-// void BatteryStatePublisher(const sensor_msgs::BatteryState &bst_msg)
-// {
-//     battery_percent = bst_msg.percentage;
-
-//     if(battery_percent >= 95){
-//         _charging_state = bst_msg.POWER_SUPPLY_STATUS_FULL;
-//         vol_raw = bst_msg.voltage;
-//     }
-//     else{
-//         _charging_state = bst_msg.POWER_SUPPLY_STATUS_CHARGING;
-//         vol_raw = bst_msg.voltage;
-//     }  
-// }
-
 void commandCallback(const geometry_msgs::Twist &cmd_msg)
 {
     if (STATE_ROS == false)

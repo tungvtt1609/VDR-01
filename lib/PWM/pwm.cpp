@@ -56,57 +56,59 @@ void main_pwm(void)
         float vel_right = 0; 
         float vel_left = 0;
 
-        if((1600 <= PulsesFWD <= 2000) || (988 <= PulsesFWD <= 1400))
+        // if((1600 <= PulsesFWD <= 2000) || (988 <= PulsesFWD <= 1400))
+        // {
+        //     STATE_ROS = false;
+        // }
+
+        // if((1600 <= PulsesSide <= 2000) || (988 <= PulsesSide <= 1400))
+        // {
+        //     STATE_ROS = false;
+        // }
+
+        // if(STATE_ROS == false){
+            
+        // }
+        // else{
+        //     vel_right = 0 - get_rpm_right();
+        //     vel_left  = get_rpm_left();
+
+        //     Write_Velocity_rpm(Right_Wheel_ID, (int32_t)vel_right);
+        //     Write_Velocity_rpm(Left_Wheel_ID, (int32_t)vel_left);
+        // }
+
+        if(PulsesFWD < 2000){
+            PulseWidthFWD = PulsesFWD;
+        }
+
+        if(abs(PulseWidthFWD - 1495) < 20)
         {
-            STATE_ROS = false;
-        }
-
-        if((1600 <= PulsesSide <= 2000) || (988 <= PulsesSide <= 1400))
+            vel_RC_linear = 0.0;
+        } 
+        else 
         {
-            STATE_ROS = false;
+            vel_RC_linear = (PulseWidthFWD - in_min) * (out_max_v - out_min_v) / (in_max - in_min) + out_min_v;
         }
 
-        if(STATE_ROS == false){
-            if(PulsesFWD < 2000){
-                PulseWidthFWD = PulsesFWD;
-            }
-
-            if(abs(PulseWidthFWD - 1495) < 20)
-            {
-                vel_RC_linear = 0.0;
-            } 
-            else 
-            {
-                vel_RC_linear = (PulseWidthFWD - in_min) * (out_max_v - out_min_v) / (in_max - in_min) + out_min_v;
-            }
-
-            // Velocity angular
-            if(PulsesSide < 2000){
-                PulseWidthSide = PulsesSide;
-            }
-
-            if(abs(PulseWidthSide - 1495) < 20)
-            {
-                vel_RC_angular = 0.0;
-            } 
-            else 
-            {
-                vel_RC_angular = (PulseWidthSide - in_min) * (out_max_w - out_min_w) / (in_max - in_min) + out_min_w;
-            }
-
-            vel_right = 0 - get_rpm_right_RC();
-            vel_left  = get_rpm_left_RC();
-
-            Write_Velocity_rpm(Right_Wheel_ID, (int32_t)vel_right);
-            Write_Velocity_rpm(Left_Wheel_ID, (int32_t)vel_left);
+        // Velocity angular
+        if(PulsesSide < 2000){
+            PulseWidthSide = PulsesSide;
         }
-        else{
-            vel_right = 0 - get_rpm_right();
-            vel_left  = get_rpm_left();
 
-            Write_Velocity_rpm(Right_Wheel_ID, (int32_t)vel_right);
-            Write_Velocity_rpm(Left_Wheel_ID, (int32_t)vel_left);
+        if(abs(PulseWidthSide - 1495) < 20)
+        {
+            vel_RC_angular = 0.0;
+        } 
+        else 
+        {
+            vel_RC_angular = (PulseWidthSide - in_min) * (out_max_w - out_min_w) / (in_max - in_min) + out_min_w;
         }
+
+        vel_right = 0 - get_rpm_right_RC();
+        vel_left  = get_rpm_left_RC();
+
+        Write_Velocity_rpm(Right_Wheel_ID, (int32_t)vel_right);
+        Write_Velocity_rpm(Left_Wheel_ID, (int32_t)vel_left);
     }   
 }
 
