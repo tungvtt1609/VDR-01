@@ -65,14 +65,16 @@ void main_charger(void)
             {
                 prev_charging_time = millis();
                 threads.delay(10);
-                battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
+                // battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
+                get_percent();
                 threads.delay(10);
             }
         }
         else
         {
-            battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
+            // battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
             // Serial.println(battery_percent);
+            get_percent();
         }
 
         // status charging, low_bat
@@ -116,7 +118,7 @@ void read_charger(void)
         cur_raw = data_buffer[4] << 8 | data_buffer[5];
         remaining_capacity = data_buffer[6] << 8 | data_buffer[7];
         norminal_capacity = data_buffer[8] << 8 | data_buffer[9];
-        vol_index = vol_raw * 0.01;
+        //vol_index = vol_raw * 0.01;
         // Serial.print(vol_raw);
         data_index = 0;
         read_index = 0;
