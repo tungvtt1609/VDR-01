@@ -28,5 +28,10 @@
 void main_charger(void);
 void Init_charge(void);
 void read_charger(void);
+float get_battery_voltage(void);
+float get_battery_current(void);
+float get_percent(void);
+
+
 
 #endif

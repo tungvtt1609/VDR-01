@@ -18,14 +18,14 @@ extern uint8_t battery_percent;
 
 unsigned long prev_charging_time = 0;
 
-char read_basic_info[] = {0xDD, 0xA5, 0x03, 0x00, 0xFF, 0xFD, 0x77};
-char read_cell_vol[] = {0xDD, 0xA5, 0x04, 0x00, 0xFF, 0xFC, 0x77};
-char read_hardware_ver[] = {0xDD, 0xA5, 0x05, 0x00, 0xFF, 0xFB, 0x77};
+char read_basic_info[7] = {0xDD, 0xA5, 0x03, 0x00, 0xFF, 0xFD, 0x77};
+char read_cell_vol[7] = {0xDD, 0xA5, 0x04, 0x00, 0xFF, 0xFC, 0x77};
+char read_hardware_ver[7] = {0xDD, 0xA5, 0x05, 0x00, 0xFF, 0xFB, 0x77};
 
 volatile int read_index = 0;
-volatile int data_index;
+volatile int8_t data_index;
 char data_buffer[30];
-volatile int vol_raw, cur_raw, remaining_capacity;
+volatile int16_t vol_raw, cur_raw, remaining_capacity, norminal_capacity;
 float vol_index = 0;
 
 
@@ -115,6 +115,7 @@ void read_charger(void)
         vol_raw = data_buffer[2] << 8 | data_buffer[3];
         cur_raw = data_buffer[4] << 8 | data_buffer[5];
         remaining_capacity = data_buffer[6] << 8 | data_buffer[7];
+        norminal_capacity = data_buffer[8] << 8 | data_buffer[9];
         vol_index = vol_raw * 0.01;
         // Serial.print(vol_raw);
         data_index = 0;
@@ -136,5 +137,20 @@ void read_charger(void)
     {
         read_index = 1;
     }
+}
+
+float get_battery_voltage(void){
+    vol_index = vol_raw/100.0f;
+    return vol_index;
+}
+
+float get_battery_current(void){
+    float cur_index = cur_raw/100.0f;
+    return cur_index; 
+}
+
+float get_percent(void){
+    battery_percent = (remaining_capacity * 1.0f / norminal_capacity) * 100.0f;
+    return battery_percent;
 }
 
