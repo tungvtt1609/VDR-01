@@ -31,9 +31,9 @@ void main_motor(void)
 
   while (1)
   {
-    if(can1.read(msg) < 0){
-      Motor_disable();
-    }
+    // if(can1.read(msg) < 0){
+    //   Motor_disable();
+    // }
 
     int32_t right_ve, left_ve;
 
@@ -74,7 +74,7 @@ void setup_motor(void)
   SDO_Write_OD(Right_Wheel_ID, SDO_W4, 0x60FF, 0x00, 0x00000000);
   // 4. enable
   Motor_enable();
-  Motor_disable();
+  // Motor_disable();
   
 }
 
