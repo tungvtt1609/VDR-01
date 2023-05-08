@@ -17,7 +17,7 @@
 extern float g_req_linear_vel_x;
 extern float g_req_linear_vel_y;
 extern float g_req_linear_vel_z;
-extern bool STATE_ROS;
+// extern bool STATE_ROS;
 
 extern int vol_raw;
 extern uint8_t battery_percent;

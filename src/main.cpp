@@ -33,7 +33,7 @@ extern int32_t velocity_L, velocity_R;  // Khai bao de in ra, ti nua k dung thi 
 int voltage;
 extern int vol_raw;
 extern float vol_index;
-extern bool STATE_ROS;
+// extern bool STATE_ROS;
 
 std_msgs::Float32 msg_left;
 std_msgs::Float32 msg_right;
@@ -50,7 +50,7 @@ void setup()
 {
   Serial.begin(9600);
 
-  STATE_ROS = true;
+  // STATE_ROS = true;
 
   nh.initNode();
   nh.getHardware()->setBaud(57600);

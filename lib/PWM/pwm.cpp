@@ -26,7 +26,7 @@ volatile float PulseWidthSide = 0;
 volatile float resultSide;
 volatile float vel_RC_linear = 0;
 volatile float vel_RC_angular = 0;
-extern bool STATE_ROS = true;
+// extern bool STATE_ROS = true;
 
 extern float g_req_linear_vel_x;
 extern float g_req_linear_vel_y;
