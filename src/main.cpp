@@ -83,7 +83,7 @@ void loop()
   pub_vol_fb.publish(&msg_vol);
   pub_bat_fb.publish(&msg_bat);
 
-  threads.delay(10);
+  threads.delay(1);
 
   threads.addThread(main_charger);
   threads.addThread(main_motor);
