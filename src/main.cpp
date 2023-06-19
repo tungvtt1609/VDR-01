@@ -86,6 +86,8 @@ void loop()
   threads.delay(1);
 
   threads.addThread(main_charger);
+  Serial.print(vol_index);
+  // Serial.print(vol_raw);
   threads.addThread(main_motor);
   
   threads.yield();

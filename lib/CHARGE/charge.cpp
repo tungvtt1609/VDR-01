@@ -32,7 +32,8 @@ float vol_index = 0;
 void Init_charge(void)
 {
     Serial.begin(57600);
-    Serial1.begin(9600);
+    Serial1.begin(9600);  // Serial1 (0, 1) cho VDR-01
+    // Serial2.begin(9600); //Serial2 (7, 8) cho VOR-01
 }
 
 void main_charger(void)
@@ -59,6 +60,7 @@ void main_charger(void)
     {
         // get battery percent
         read_charger();
+        get_battery_voltage();
         if (_charging_state == CHARGING)
         {
             if (millis() - prev_charging_time >= 60000)
@@ -118,6 +120,7 @@ void read_charger(void)
         cur_raw = data_buffer[4] << 8 | data_buffer[5];
         remaining_capacity = data_buffer[6] << 8 | data_buffer[7];
         norminal_capacity = data_buffer[8] << 8 | data_buffer[9];
+        // get_battery_voltage();
         //vol_index = vol_raw * 0.01;
         // Serial.print(vol_raw);
         data_index = 0;
@@ -143,6 +146,7 @@ void read_charger(void)
 
 float get_battery_voltage(void){
     vol_index = vol_raw/100.0f;
+    // Serial.print(vol_index);
     return vol_index;
 }
 
