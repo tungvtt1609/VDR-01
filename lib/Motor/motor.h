@@ -28,12 +28,12 @@
 #define PV_Mode 3
 #define PT_Mode  4
 
-// #define DISTANCE_WHEEL 0.385 // met // for VDR
-// #define DIAMETER_WHEEL 0.169  // for VDR
+#define DISTANCE_WHEEL 0.385 // met // for VDR
+#define DIAMETER_WHEEL 0.169  // for VDR
 
 //distance wheel 318,8mm
-#define DISTANCE_WHEEL 0.4       //for VOR
-#define DIAMETER_WHEEL 0.172     //for VOR
+// #define DISTANCE_WHEEL 0.4       //for VOR
+// #define DIAMETER_WHEEL 0.172     //for VOR
 
 #define LINEAR_X 1
 #define ANGULAR_Z 2
