@@ -33,8 +33,8 @@ float cur_index = 0;
 void Init_charge(void)
 {
     Serial.begin(57600);
-    // Serial1.begin(9600);  // Serial1 (0, 1) cho VDR-01
-    Serial2.begin(9600); //Serial2 (7, 8) cho VOR-01
+    Serial1.begin(9600);  // Serial1 (0, 1) cho VDR-01
+    // Serial2.begin(9600); //Serial2 (7, 8) cho VOR-01
 }
 
 void main_charger(void)
@@ -42,17 +42,17 @@ void main_charger(void)
     Init_charge();
     for (int i = 0; i < 7; i++)
     {
-        Serial2.print(read_basic_info[i]);
+        Serial1.print(read_basic_info[i]);
     }
     delay(500);
     for (int i = 0; i < 7; i++)
     {
-        Serial2.print(read_cell_vol[i]);
+        Serial1.print(read_cell_vol[i]);
     }
     delay(500);
     for (int i = 0; i < 7; i++)
     {
-        Serial2.print(read_hardware_ver[i]);
+        Serial1.print(read_hardware_ver[i]);
     }
     delay(500);
 
@@ -68,16 +68,16 @@ void main_charger(void)
             {
                 prev_charging_time = millis();
                 threads.delay(10);
-                // battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
-                get_percent();
+                battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
+                // get_percent();
                 threads.delay(10);
             }
         }
         else
         {
-            // battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
+            battery_percent = map(vol_index, MIN_VOLTAGE, MAX_VOLTAGE, 0, 100);
             // Serial.println(battery_percent);
-            get_percent();
+            // get_percent();
         }
 
         // status charging, low_bat
@@ -108,7 +108,7 @@ void main_charger(void)
 // Read RS485 from PIN
 void read_charger(void)
 {
-    char inChar = (char)Serial2.read();
+    char inChar = (char)Serial1.read();
     if (read_index == 2)
     {
         data_buffer[data_index] = inChar;
@@ -156,8 +156,8 @@ float get_battery_current(void){
     return cur_index; 
 }
 
-float get_percent(void){
-    battery_percent = (remaining_capacity * 1.0f / norminal_capacity) * 100.0f;
-    return battery_percent;
-}
+// float get_percent(void){
+//     battery_percent = (remaining_capacity * 1.0f / norminal_capacity) * 100.0f;
+//     return battery_percent;
+// }
 

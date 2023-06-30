@@ -55,7 +55,7 @@ void setup()
   // STATE_ROS = true;
 
   nh.initNode();
-  nh.getHardware()->setBaud(57600);
+  nh.getHardware()->setBaud(115200);
   nh.subscribe(cmd_sub);
 
   nh.advertise(pub_vel_right_fb);
@@ -91,7 +91,11 @@ void loop()
 
   threads.addThread(main_charger);
   Serial.print(vol_index);
-  // Serial.print(vol_raw);
+  Serial.print(' ');
+  Serial.print(battery_percent);
+  Serial.print(' ');
+  Serial.print(msg_vol.data);
+  Serial.print(' ');
   threads.addThread(main_motor);
   
   threads.yield();
