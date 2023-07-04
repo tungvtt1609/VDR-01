@@ -90,12 +90,12 @@ void loop()
   threads.delay(1);
 
   threads.addThread(main_charger);
-  Serial.print(vol_index);
-  Serial.print(' ');
-  Serial.print(battery_percent);
-  Serial.print(' ');
-  Serial.print(msg_vol.data);
-  Serial.print(' ');
+  // Serial.print(vol_index);
+  // Serial.print(' ');
+  // Serial.print(battery_percent);
+  // Serial.print(' ');
+  // Serial.print(msg_vol.data);
+  // Serial.print(' ');
   threads.addThread(main_motor);
   
   threads.yield();
