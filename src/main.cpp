@@ -55,7 +55,7 @@ void setup()
   // STATE_ROS = true;
 
   nh.initNode();
-  nh.getHardware()->setBaud(115200);
+  nh.getHardware()->setBaud(57600);
   nh.subscribe(cmd_sub);
 
   nh.advertise(pub_vel_right_fb);
