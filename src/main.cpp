@@ -35,11 +35,12 @@ extern float vol_index;
 extern float cur_index;
 // extern bool STATE_ROS;
 
-std_msgs::Float32 msg_left;
-std_msgs::Float32 msg_right;
-std_msgs::Float32 msg_vol;
-std_msgs::Float32 msg_bat;
-std_msgs::Float32 msg_state;
+std_msgs::Float32 msg_left;           //message banh trai
+std_msgs::Float32 msg_right;          //message banh phai
+std_msgs::Float32 msg_vol;            //message dien ap
+std_msgs::Float32 msg_bat;            //message battery percent
+std_msgs::Float32 msg_state;          //message trang thai robot
+std_msgs::Float32 msg_state_pin;      //messgae trang thai pin
 ros::NodeHandle nh;
 
 ros::Subscriber<geometry_msgs::Twist> cmd_sub("cmd_vel", commandCallback);
@@ -48,6 +49,7 @@ ros::Publisher pub_vel_right_fb("cmd_feedback_right", &msg_right);
 ros::Publisher pub_vol_fb("cmd_vol_fb", &msg_vol);
 ros::Publisher pub_bat_fb("cmd_bat_fb", &msg_bat);
 ros::Publisher pub_state("cmd_state", &msg_state);
+ros::Publisher pub_state_pin("cmd_state_pin", &msg_state_pin);
 void setup()
 {
   Serial.begin(9600);
@@ -65,6 +67,7 @@ void setup()
   nh.advertise(pub_bat_fb);  
 
   nh.advertise(pub_state);
+  nh.advertise(pub_state_pin);
 
   threads.addThread(main_motor);
   threads.addThread(main_sensor);
@@ -81,11 +84,17 @@ void loop()
   msg_bat.data = battery_percent;
   msg_vol.data = vol_index;
 
+  msg_state.data = _running_state;
+  msg_state_pin.data = _charging_state;
+
   pub_vel_left_fb.publish(&msg_left);
   pub_vel_right_fb.publish(&msg_right);
 
   pub_vol_fb.publish(&msg_vol);
   pub_bat_fb.publish(&msg_bat);
+
+  pub_state.publish(&msg_state);
+  pub_state_pin.publish(&msg_state_pin);
 
   threads.delay(1);
 

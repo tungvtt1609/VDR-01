@@ -45,6 +45,13 @@ void main_motor(void)
     
     velocity_R = Read_Velocity_rpm(Right_Wheel_ID);
     velocity_L = Read_Velocity_rpm(Left_Wheel_ID);
+
+    if(velocity_L > 0 && velocity_R > 0){
+      _running_state = RUNNING;
+    }
+    else{
+      _running_state = STOP;
+    }
     
     threads.yield();
   }
@@ -187,4 +194,5 @@ float get_rpm_left()
   angular_vel_left_mins = (angular_vel_left_s / PI) * 30;
   return angular_vel_left_mins;
 }
+
 
