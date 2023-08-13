@@ -99,12 +99,12 @@ void loop()
   threads.delay(1);
 
   threads.addThread(main_charger);
-  Serial.print(vol_index);
-  Serial.print(' ');
+  // Serial.print(vol_index);
+  // Serial.print(' ');
   // Serial.print("2602");
-  Serial.print(' ');
+  // Serial.print(' ');
   // Serial.print(msg_vol.data);
-  Serial.print(' ');
+  // Serial.print(' ');
   threads.addThread(main_motor);
   
   threads.yield();
