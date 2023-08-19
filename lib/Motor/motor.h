@@ -17,6 +17,8 @@
 #define RUNNING 1
 #define STOP 2
 
+#define NO_MOTOR  3
+
 #define Left_Wheel_ID 01
 #define Right_Wheel_ID 02
 // tham so cua driver
@@ -28,15 +30,17 @@
 #define PV_Mode 3
 #define PT_Mode  4
 
-#define DISTANCE_WHEEL 0.385 // met // for VDR
-#define DIAMETER_WHEEL 0.169  // for VDR
+// #define DISTANCE_WHEEL 0.385 // met // for VDR
+// #define DIAMETER_WHEEL 0.169  // for VDR
 
 //distance wheel 318,8mm
-// #define DISTANCE_WHEEL 0.4       //for VOR
-// #define DIAMETER_WHEEL 0.172     //for VOR
+#define DISTANCE_WHEEL 0.4       //for VOR
+#define DIAMETER_WHEEL 0.172     //for VOR
 
 #define LINEAR_X 1
 #define ANGULAR_Z 2
+
+#define ESTOP_BUTTON  6
 
 void main_motor(void);
 void setup_motor(void);
