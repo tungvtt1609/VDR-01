@@ -18,7 +18,6 @@
 #include "sensor.h"
 #include "pwm.h"
 
-
 uint8_t _button_state = 0;       // trang thai nut nhan gan nhat
 uint8_t _motion_state = 0;       // trang thai chuyen dong
 uint8_t _sensor_state = 0;       // trang thai nhan biet co vat can hay k
@@ -40,7 +39,8 @@ std_msgs::Float32 msg_right;          //message banh phai
 std_msgs::Float32 msg_vol;            //message dien ap
 std_msgs::Float32 msg_bat;            //message battery percent
 std_msgs::Float32 msg_state;          //message trang thai robot
-std_msgs::Float32 msg_state_pin;      //messgae trang thai pin
+std_msgs::Float32 msg_state_pin;      //message trang thai pin
+std_msgs::Float32 msg_state_button;   //message trang thai estop
 ros::NodeHandle nh;
 
 ros::Subscriber<geometry_msgs::Twist> cmd_sub("cmd_vel", commandCallback);
@@ -50,6 +50,7 @@ ros::Publisher pub_vol_fb("cmd_vol_fb", &msg_vol);
 ros::Publisher pub_bat_fb("cmd_bat_fb", &msg_bat);
 ros::Publisher pub_state("cmd_state", &msg_state);
 ros::Publisher pub_state_pin("cmd_state_pin", &msg_state_pin);
+ros::Publisher pub_state_button("cmd_state_button", &msg_state_button);
 void setup()
 {
   Serial.begin(9600);
@@ -69,6 +70,8 @@ void setup()
   nh.advertise(pub_state);
   nh.advertise(pub_state_pin);
 
+  nh.advertise(pub_state_button);
+
   threads.addThread(main_motor);
   threads.addThread(main_sensor);
   threads.addThread(main_charger);
@@ -87,6 +90,8 @@ void loop()
   msg_state.data = _running_state;
   msg_state_pin.data = _charging_state;
 
+  msg_state_button.data = _button_state;
+
   pub_vel_left_fb.publish(&msg_left);
   pub_vel_right_fb.publish(&msg_right);
 
@@ -95,7 +100,7 @@ void loop()
 
   pub_state.publish(&msg_state);
   pub_state_pin.publish(&msg_state_pin);
-
+  pub_state_button.publish(&msg_state_button);
   threads.delay(1);
 
   threads.addThread(main_charger);

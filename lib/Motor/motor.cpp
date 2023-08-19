@@ -21,6 +21,7 @@ extern float g_req_linear_vel_z;
 int32_t velocity_L, velocity_R;
 
 extern uint8_t _sensor_state;
+extern uint8_t _button_state;
 
 FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> can1;
 CAN_message_t msg;
@@ -32,8 +33,13 @@ void main_motor(void)
   while (1)
   {
     // if(can1.read(msg) == 0){
-    //   // asm volatile("BKPT #251");
+    //   setup_motor();
     // }
+    if(digitalRead(ESTOP_BUTTON) == HIGH)
+    {
+      setup_motor();
+    }
+    else _button_state = NO_MOTOR;
 
     int32_t right_ve, left_ve;
 
@@ -62,6 +68,7 @@ void setup_motor(void)
   // 1. Init CAN and Baudrate
   can1.begin();
   can1.setBaudRate(1000000);
+  pinMode(ESTOP_BUTTON, INPUT_PULLUP);
   // 2. set thanh controllabe status: send: 000 01 02
   CANopen_Activate(Left_Wheel_ID);
   CANopen_Activate(Right_Wheel_ID);

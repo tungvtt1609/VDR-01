@@ -17,6 +17,8 @@
 #define RUNNING 1
 #define STOP 2
 
+#define NO_MOTOR  3
+
 #define Left_Wheel_ID 01
 #define Right_Wheel_ID 02
 // tham so cua driver
@@ -38,7 +40,7 @@
 #define LINEAR_X 1
 #define ANGULAR_Z 2
 
-#define RST_BUTTON  10
+#define ESTOP_BUTTON  6
 
 void main_motor(void);
 void setup_motor(void);
