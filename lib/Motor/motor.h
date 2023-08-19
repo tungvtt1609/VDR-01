@@ -38,6 +38,8 @@
 #define LINEAR_X 1
 #define ANGULAR_Z 2
 
+#define RST_BUTTON  10
+
 void main_motor(void);
 void setup_motor(void);
 void get_wheel_velocity(void);

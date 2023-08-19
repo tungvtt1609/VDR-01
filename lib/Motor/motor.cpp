@@ -31,8 +31,8 @@ void main_motor(void)
 
   while (1)
   {
-    // if(can1.read(msg) < 0){
-    //   Motor_disable();
+    // if(can1.read(msg) == 0){
+    //   // asm volatile("BKPT #251");
     // }
 
     int32_t right_ve, left_ve;
