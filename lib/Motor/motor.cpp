@@ -29,17 +29,21 @@ CAN_message_t msg;
 void main_motor(void)
 {
   setup_motor();
+  // if(can1.read(msg) != 0){
+  //     setup_motor();
+  // }
+  // else setup_motor();
 
   while (1)
   {
     // if(can1.read(msg) == 0){
     //   setup_motor();
     // }
-    if(digitalRead(ESTOP_BUTTON) == HIGH)
-    {
-      setup_motor();
-    }
-    else _button_state = NO_MOTOR;
+    // if(digitalRead(ESTOP_BUTTON) == HIGH)
+    // {
+    //   setup_motor();
+    // }
+    // else _button_state = NO_MOTOR;
 
     int32_t right_ve, left_ve;
 

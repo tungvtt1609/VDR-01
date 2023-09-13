@@ -34,8 +34,8 @@ extern float vol_index;
 extern float cur_index;
 // extern bool STATE_ROS;
 
-std_msgs::Float32 msg_left;           //message banh trai
-std_msgs::Float32 msg_right;          //message banh phai
+// std_msgs::Float32 msg_left;           //message banh trai
+// std_msgs::Float32 msg_right;          //message banh phai
 std_msgs::Float32 msg_vol;            //message dien ap
 std_msgs::Float32 msg_bat;            //message battery percent
 std_msgs::Float32 msg_state;          //message trang thai robot
@@ -44,25 +44,25 @@ std_msgs::Float32 msg_state_button;   //message trang thai estop
 ros::NodeHandle nh;
 
 ros::Subscriber<geometry_msgs::Twist> cmd_sub("cmd_vel", commandCallback);
-ros::Publisher pub_vel_left_fb("cmd_feedback_left", &msg_left);
-ros::Publisher pub_vel_right_fb("cmd_feedback_right", &msg_right);
+// ros::Publisher pub_vel_left_fb("cmd_feedback_left", &msg_left);
+// ros::Publisher pub_vel_right_fb("cmd_feedback_right", &msg_right);
 ros::Publisher pub_vol_fb("cmd_vol_fb", &msg_vol);
 ros::Publisher pub_bat_fb("cmd_bat_fb", &msg_bat);
 ros::Publisher pub_state("cmd_state", &msg_state);
 ros::Publisher pub_state_pin("cmd_state_pin", &msg_state_pin);
 ros::Publisher pub_state_button("cmd_state_button", &msg_state_button);
+
+
 void setup()
 {
   Serial.begin(9600);
-
-  // STATE_ROS = true;
 
   nh.initNode();
   nh.getHardware()->setBaud(57600);
   nh.subscribe(cmd_sub);
 
-  nh.advertise(pub_vel_right_fb);
-  nh.advertise(pub_vel_left_fb);
+  // nh.advertise(pub_vel_right_fb);
+  // nh.advertise(pub_vel_left_fb);
 
   nh.advertise(pub_vol_fb);
   nh.advertise(pub_bat_fb);  
@@ -81,8 +81,8 @@ void setup()
 
 void loop()
 {
-  msg_left.data = velocity_L;
-  msg_right.data = velocity_R;
+  // msg_left.data = velocity_L;
+  // msg_right.data = velocity_R;
 
   msg_bat.data = battery_percent;
   msg_vol.data = vol_index;
@@ -92,8 +92,8 @@ void loop()
 
   msg_state_button.data = _button_state;
 
-  pub_vel_left_fb.publish(&msg_left);
-  pub_vel_right_fb.publish(&msg_right);
+  // pub_vel_left_fb.publish(&msg_left);
+  // pub_vel_right_fb.publish(&msg_right);
 
   pub_vol_fb.publish(&msg_vol);
   pub_bat_fb.publish(&msg_bat);
@@ -101,12 +101,14 @@ void loop()
   pub_state.publish(&msg_state);
   pub_state_pin.publish(&msg_state_pin);
   pub_state_button.publish(&msg_state_button);
-  threads.delay(1);
 
   threads.addThread(main_charger);
   threads.addThread(main_motor);
-  
-  threads.yield();
+
+  Serial.print(vol_index);
 
   nh.spinOnce();
+  threads.delay(10);
+  threads.yield();
+
 }
