@@ -32,7 +32,6 @@ extern int32_t velocity_L, velocity_R;  // Khai bao de in ra, ti nua k dung thi 
 extern int vol_raw;
 extern float vol_index;
 extern float cur_index;
-// extern bool STATE_ROS;
 
 std_msgs::Float32 msg_left;           //message banh trai
 std_msgs::Float32 msg_right;          //message banh phai
